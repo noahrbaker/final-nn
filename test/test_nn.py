@@ -21,7 +21,7 @@ def simple_nn():
 
 
 def test_single_forward():
-    little_nn = simple_nn()
+    # simple_nn = simple_nn()
     W = np.array([[0.1, 0.2], [0.3, 0.4]])
     b = np.array([[0.1], [0.2]])
     A_prev = np.array([[1.0], [2.0]])
@@ -29,19 +29,19 @@ def test_single_forward():
     expected_A = np.array([[0.6], [1.3]])
 
     # test ReLU
-    A_relu, Z_relu = little_nn._single_forward(W, b, A_prev, 'relu')
+    A_relu, Z_relu = simple_nn._single_forward(W, b, A_prev, 'relu')
     np.testing.assert_array_almost_equal(Z_relu, expected_Z)
     np.testing.assert_array_almost_equal(A_relu, expected_A)
 
     # test Sigmoid
-    A_sig, _ = little_nn._single_forward(W, b, A_prev, 'sigmoid')
+    A_sig, _ = simple_nn._single_forward(W, b, A_prev, 'sigmoid')
     expected_A_sig = 1 / (1 + np.exp(-expected_Z))
     np.testing.assert_array_almost_equal(A_sig, expected_A_sig)
 
 def test_forward():
-    little_nn = simple_nn()
+    # simple_nn = simple_nn()
     X = np.array([[1.0, 2.0], [3.0, 4.0]])
-    output, cache = little_nn.forward(X)
+    output, cache = simple_nn.forward(X)
     
     assert all(f'A{i}' in cache for i in range(3))
     assert all(f'Z{i}' in cache for i in range(1, 3))
@@ -49,13 +49,13 @@ def test_forward():
     assert cache['A0'].shape == (2, 2)  # Input layer
 
 def test_single_backprop():
-    little_nn = simple_nn()
+    # simple_nn = simple_nn()
     W = np.array([[0.1, 0.2], [0.3, 0.4]])
     b = np.array([[0.1], [0.2]])
     Z = np.array([[0.5], [1.1]])
     A_prev = np.array([[1.0], [2.0]])
     dA = np.array([[0.1], [0.2]])
-    dA_prev, dW, db = little_nn._single_backprop(
+    dA_prev, dW, db = simple_nn._single_backprop(
         W, b, Z, A_prev, dA, 'relu'
     )
     
@@ -64,44 +64,44 @@ def test_single_backprop():
     assert db.shape == b.shape
 
 def test_predict():
-    little_nn = simple_nn()
+    # simple_nn = simple_nn()
     X = np.array([[1.0, 2.0], [3.0, 4.0]])
-    predictions = little_nn.predict(X)
+    predictions = simple_nn.predict(X)
 
     assert predictions.shape == (2, 1)
     assert np.all((predictions >= 0) & (predictions <= 1))
 
 def test_binary_cross_entropy():
-    little_nn = simple_nn()
+    # simple_nn = simple_nn()
     y = np.array([[1, 0], [0, 1]])
     y_hat = np.array([[0.7, 0.3], [0.2, 0.8]])
-    loss = little_nn._binary_cross_entropy(y, y_hat)
+    loss = simple_nn._binary_cross_entropy(y, y_hat)
 
     assert isinstance(loss, float)
     assert loss >= 0
 
 def test_binary_cross_entropy_backprop():
-    little_nn = simple_nn()
+    # simple_nn = simple_nn()
     y = np.array([[1, 0], [0, 1]])
     y_hat = np.array([[0.7, 0.3], [0.2, 0.8]])
-    dA = little_nn._binary_cross_entropy_backprop(y, y_hat)
+    dA = simple_nn._binary_cross_entropy_backprop(y, y_hat)
 
     assert dA.shape == y.shape
 
 def test_mean_squared_error():
-    little_nn = simple_nn()
+    # simple_nn = simple_nn()
     y = np.array([[1.0, 0.0], [0.0, 1.0]])
     y_hat = np.array([[0.9, 0.1], [0.1, 0.9]])
-    loss = little_nn._mean_squared_error(y, y_hat)
+    loss = simple_nn._mean_squared_error(y, y_hat)
 
     assert isinstance(loss, float)
     assert loss >= 0
 
 def test_mean_squared_error_backprop():
-    little_nn = simple_nn()
+    # simple_nn = simple_nn()
     y = np.array([[1.0, 0.0], [0.0, 1.0]])
     y_hat = np.array([[0.9, 0.1], [0.1, 0.9]])
-    dA = little_nn._mean_squared_error_backprop(y, y_hat)
+    dA = simple_nn._mean_squared_error_backprop(y, y_hat)
 
     assert dA.shape == y.shape
 
