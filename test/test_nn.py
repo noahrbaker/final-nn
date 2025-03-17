@@ -68,7 +68,7 @@ def test_predict(simple_nn):
     X = np.array([[1.0, 2.0], [3.0, 4.0]])
     predictions = simple_nn.predict(X)
 
-    assert predictions.shape == (2, 1)
+    assert predictions.shape == (1, 2)
     assert np.all((predictions >= 0) & (predictions <= 1))
 
 def test_binary_cross_entropy(simple_nn):
