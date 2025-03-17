@@ -20,7 +20,7 @@ def simple_nn():
     )
 
 
-def test_single_forward():
+def test_single_forward(simple_nn):
     # simple_nn = simple_nn()
     W = np.array([[0.1, 0.2], [0.3, 0.4]])
     b = np.array([[0.1], [0.2]])
@@ -38,7 +38,7 @@ def test_single_forward():
     expected_A_sig = 1 / (1 + np.exp(-expected_Z))
     np.testing.assert_array_almost_equal(A_sig, expected_A_sig)
 
-def test_forward():
+def test_forward(simple_nn):
     # simple_nn = simple_nn()
     X = np.array([[1.0, 2.0], [3.0, 4.0]])
     output, cache = simple_nn.forward(X)
@@ -48,7 +48,7 @@ def test_forward():
     assert output.shape == (1, 2)  # Final layer output
     assert cache['A0'].shape == (2, 2)  # Input layer
 
-def test_single_backprop():
+def test_single_backprop(simple_nn):
     # simple_nn = simple_nn()
     W = np.array([[0.1, 0.2], [0.3, 0.4]])
     b = np.array([[0.1], [0.2]])
@@ -63,7 +63,7 @@ def test_single_backprop():
     assert dW.shape == W.shape
     assert db.shape == b.shape
 
-def test_predict():
+def test_predict(simple_nn):
     # simple_nn = simple_nn()
     X = np.array([[1.0, 2.0], [3.0, 4.0]])
     predictions = simple_nn.predict(X)
@@ -71,7 +71,7 @@ def test_predict():
     assert predictions.shape == (2, 1)
     assert np.all((predictions >= 0) & (predictions <= 1))
 
-def test_binary_cross_entropy():
+def test_binary_cross_entropy(simple_nn):
     # simple_nn = simple_nn()
     y = np.array([[1, 0], [0, 1]])
     y_hat = np.array([[0.7, 0.3], [0.2, 0.8]])
@@ -80,7 +80,7 @@ def test_binary_cross_entropy():
     assert isinstance(loss, float)
     assert loss >= 0
 
-def test_binary_cross_entropy_backprop():
+def test_binary_cross_entropy_backprop(simple_nn):
     # simple_nn = simple_nn()
     y = np.array([[1, 0], [0, 1]])
     y_hat = np.array([[0.7, 0.3], [0.2, 0.8]])
@@ -88,7 +88,7 @@ def test_binary_cross_entropy_backprop():
 
     assert dA.shape == y.shape
 
-def test_mean_squared_error():
+def test_mean_squared_error(simple_nn):
     # simple_nn = simple_nn()
     y = np.array([[1.0, 0.0], [0.0, 1.0]])
     y_hat = np.array([[0.9, 0.1], [0.1, 0.9]])
@@ -97,7 +97,7 @@ def test_mean_squared_error():
     assert isinstance(loss, float)
     assert loss >= 0
 
-def test_mean_squared_error_backprop():
+def test_mean_squared_error_backprop(simple_nn):
     # simple_nn = simple_nn()
     y = np.array([[1.0, 0.0], [0.0, 1.0]])
     y_hat = np.array([[0.9, 0.1], [0.1, 0.9]])
